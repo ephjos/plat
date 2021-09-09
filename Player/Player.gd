@@ -15,7 +15,11 @@ var velocity = Vector2()
 var jumping = false
 var double_jumping = false
 var last_on_floor = 0
-var moving_direction = 1
+var moving_right = true
+
+onready var shotCooldown = $ShotCooldown
+onready var muzzleFlash = $MuzzleFlash
+onready var muzzleFlashAnimation = $MuzzleFlash/AnimationPlayer
 
 func _ready():
 	pass
@@ -46,15 +50,15 @@ func _physics_process(delta):
 		jumping = false
 		double_jumping = false
 		
-	_update_state(velocity)
-	_animate(velocity)
-	_act(velocity)
+	_update_state()
+	_animate()
+	_act()
 	
 	# Move, slide, and saved the resulting velocity
 	velocity = move_and_slide(velocity, Vector2(0, -1))
 	
 # Ensure internal state is consistent before calculating physics
-func _update_state(velocity):
+func _update_state():
 	if has_gun:
 		idle_animation = "gun_idle"
 		walk_animation = "gun_walk"
@@ -63,34 +67,43 @@ func _update_state(velocity):
 		walk_animation = "walk"
 		
 	if velocity.x > 0:
-		moving_direction = 1
+		moving_right = true
 	elif velocity.x < 0:
-		moving_direction = -1
+		moving_right = false
 	
-	
-# Apply animations	
-func _animate(velocity):
+# Apply animations
+func _animate():
 	if velocity.x == 0:
-		$AnimatedSprite.animation = idle_animation
-		$AnimatedSprite.stop()
-	elif moving_direction == 1:
+		_play_animation(idle_animation)
+	elif moving_right:
 		$AnimatedSprite.flip_h = false
-		$AnimatedSprite.animation = walk_animation
-		$AnimatedSprite.play()
-	elif moving_direction == -1:
+		_play_animation(walk_animation)
+	elif !moving_right:
 		$AnimatedSprite.flip_h = true
-		$AnimatedSprite.animation = walk_animation
+		_play_animation(walk_animation)
+	
+func _play_animation(name):
+	if $AnimatedSprite.animation != name:
+		$AnimatedSprite.animation = name
 		$AnimatedSprite.play()
 	
-func _act(velocity):
+func _act():
 	if has_gun and Input.is_action_just_pressed("ui_accept"):
-		var bullet_position = Vector2(position.x + (moving_direction*7), position.y+3)
-		
+		if !shotCooldown.is_stopped():
+			return
 		var bullet = Bullet.instance()
-		bullet.creator_id = get_instance_id()
-		bullet.position = bullet_position
-		bullet.scale *= 0.5
 		
-		if moving_direction == -1:
-			bullet.rotation = PI
-		owner.add_child(bullet)
+		if moving_right:
+			bullet.transform = $GunRight.global_transform
+		else:
+			bullet.transform = $GunLeft.global_transform
+			
+		bullet.creator_id = get_instance_id()
+		bullet.scale = Vector2(0.5, 0.5)
+		get_parent().add_child(bullet)
+		
+		muzzleFlash.global_transform = bullet.global_transform
+		muzzleFlashAnimation.play("Flash")
+		
+		shotCooldown.start()
+		

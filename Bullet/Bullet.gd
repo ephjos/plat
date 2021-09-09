@@ -9,6 +9,7 @@ var creator_id = null
 
 func _ready():
 	add_to_group("bullets")
+
 	#var shot = ShotSound.instance()
 	#shot.position = position
 	#shot.play()
@@ -24,7 +25,7 @@ func _on_Bullet_body_entered(body):
 		
 	if body.is_in_group("shootable"):
 		body.hit()
-		
+	
 	set_physics_process(false)
 	#var hit = Hit.instance()
 	#add_child(hit)
