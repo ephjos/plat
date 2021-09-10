@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/pixel-line-platformer/Tiles/tile_0046.png" type="Texture" id=1]
 [ext_resource path="res://assets/pixel-line-platformer/Tiles/tile_0045.png" type="Texture" id=2]
@@ -8,35 +8,7 @@
 [ext_resource path="res://assets/pixel-line-platformer/Tiles/tile_0040.png" type="Texture" id=6]
 [ext_resource path="res://assets/pixel-line-platformer/Tiles/tile_0043.png" type="Texture" id=7]
 
-[sub_resource type="SpriteFrames" id=1]
-animations = [ {
-"frames": [ ExtResource( 2 ) ],
-"loop": false,
-"name": "idle",
-"speed": 1.0
-}, {
-"frames": [ ExtResource( 2 ), ExtResource( 1 ) ],
-"loop": false,
-"name": "walk",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 6 ), ExtResource( 5 ) ],
-"loop": false,
-"name": "gun_walk",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 6 ) ],
-"loop": false,
-"name": "gun_idle",
-"speed": 1.0
-}, {
-"frames": [ ExtResource( 6 ), ExtResource( 4 ), ExtResource( 6 ) ],
-"loop": false,
-"name": "gun_shoot",
-"speed": 30.0
-} ]
-
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=1]
 resource_name = "Flash"
 length = 0.1
 step = 0.01
@@ -68,16 +40,96 @@ tracks/1/keys = {
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 7, 7 )
 
+[sub_resource type="Animation" id=3]
+resource_name = "Gun Idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 6 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Gun Shoot"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 6 ), ExtResource( 4 ), ExtResource( 6 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Gun Walk"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.001, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 6 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 6 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 2 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Walk"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 2 ), ExtResource( 1 ), ExtResource( 2 ) ]
+}
+
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 3 )
 
-[node name="ShotCooldown" type="Timer" parent="."]
-wait_time = 0.05
+[node name="StepParticleCooldown" type="Timer" parent="."]
+wait_time = 0.1
 one_shot = true
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 1 )
-animation = "gun_shoot"
+[node name="ShotCooldown" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
 
 [node name="MuzzleFlash" type="Sprite" parent="."]
 visible = false
@@ -87,7 +139,7 @@ texture = ExtResource( 7 )
 offset = Vector2( 8, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MuzzleFlash"]
-anims/Flash = SubResource( 3 )
+anims/Flash = SubResource( 1 )
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 1 )
@@ -99,3 +151,13 @@ position = Vector2( 8, 3 )
 [node name="GunLeft" type="Position2D" parent="."]
 position = Vector2( -8, 3 )
 rotation = 3.14159
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 6 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+"anims/Gun Idle" = SubResource( 3 )
+"anims/Gun Shoot" = SubResource( 4 )
+"anims/Gun Walk" = SubResource( 5 )
+anims/Idle = SubResource( 6 )
+anims/Walk = SubResource( 7 )
