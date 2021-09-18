@@ -12,7 +12,4 @@ func _ready():
 			limit_left = min(used.position.x * tilemap.cell_size.x, limit_left)
 			limit_right = max(used.end.x * tilemap.cell_size.x, limit_right)
 			limit_bottom = max(used.end.y * tilemap.cell_size.y, limit_bottom)
-	
-	print(limit_left, " ",
-	limit_right, " ",
-	limit_bottom)
+

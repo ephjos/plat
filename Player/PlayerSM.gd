@@ -5,52 +5,84 @@ func _ready():
 	add_state("run")
 	add_state("jump")
 	add_state("fall")
+	add_state("wall_slide")
 	call_deferred("set_state", states.idle)
 	
 func _input(event):
 	if [states.idle, states.run].has(state):
 		if event.is_action_pressed("jump"):
-			parent.velocity.y = parent.jump_velocity
+			parent.jump()
+	
+	if state == states.fall && !parent.coyoteTimer.is_stopped():
+		if event.is_action_pressed("jump"):
+			parent.coyoteTimer.stop()
+			parent.jump()
 	
 	if state == states.jump:
 		if event.is_action_released("jump") && parent.velocity.y < parent.min_jump_velocity:
-			parent.velocity.y = parent.min_jump_velocity
-
+			parent.variable_jump()
+			
+	if state == states.wall_slide:
+		if event.is_action_pressed("jump"):
+			parent.wall_jump()
+			set_state(states.jump)
+		
 func _state_logic(delta):
-	parent._handle_move_input()
+	parent._update_move_direction()
+	parent._update_wall_direction()
+	if state != states.wall_slide:
+		parent._handle_move_input()
 	parent._apply_gravity(delta)
+	if state == states.wall_slide:
+		parent._cap_wall_slide_gravity()
+		parent._handle_wall_slide_stick()
 	parent._apply_movement()
+	
+	# Debug display
 	parent.get_node("StateLabel").text = states.keys()[state]
 	
 func _get_transition(delta):
+	var x = parent.velocity.x
+	var y = parent.velocity.y
+	var is_grounded = parent.is_grounded
+	
 	match state:
 		states.idle:
-			if !parent.is_grounded:
-				if parent.velocity.y < 0:
+			if !is_grounded:
+				if y < 0:
 					return states.jump
-				elif parent.velocity.y > 0:
+				elif y > 0:
 					return states.fall
-			elif abs(parent.velocity.x) > 0.1:
+			elif abs(x) > 0.1:
 				return states.run
 		states.run:
-			print(parent.velocity.x)
-			if !parent.is_grounded:
-				if parent.velocity.y < 0:
+			if !is_grounded:
+				if y < 0:
 					return states.jump
-				elif parent.velocity.y > 0:
+				elif y > 0:
 					return states.fall
-			elif abs(parent.velocity.x) <= 0.1:
+			elif abs(x) <= 0.1:
 				return states.idle
 		states.jump:
-			if parent.is_grounded:
+			if parent.wall_direction != 0 && parent.wallJumpTimer.is_stopped():
+				return states.wall_slide
+			if is_grounded:
 				return states.idle
-			elif parent.velocity.y >= 0:
+			elif y >= 0:
 				return states.fall
 		states.fall:
-			if parent.is_grounded:
+			if parent.wall_direction != 0 && parent.wallJumpTimer.is_stopped():
+				return states.wall_slide
+			if is_grounded:
 				return states.idle
-			elif parent.velocity.y < 0:
+			elif y < 0:
 				return states.jump
+		states.wall_slide:
+			if is_grounded:
+				return states.idle
+			if parent.wall_direction == 0:
+				return states.fall
+			
 	return null
 	
 func _enter_state(new_state, old_state):
@@ -63,8 +95,19 @@ func _enter_state(new_state, old_state):
 			parent._play_animation("jump")
 		states.fall:
 			parent._play_animation("fall")
-			
+			if old_state == states.run:
+				parent.coyoteTimer.start()
+		states.wall_slide:
+			parent._play_animation("wall_slide")
+			parent.body.scale.x = -parent.wall_direction
+				
 	return null
 	
 func _exit_state(old_state, new_state):
-	pass
+	match old_state:
+		states.wall_slide:
+			parent.wallJumpTimer.start()
+
+func _on_WallStickTimer_timeout():
+	if state == states.wall_slide:
+		set_state(states.fall)
