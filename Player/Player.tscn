@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
+[ext_resource path="res://Player/PlayerSM.gd" type="Script" id=1]
 [ext_resource path="res://assets/Tiles/tile_0040.png" type="Texture" id=2]
 [ext_resource path="res://assets/Tiles/tile_0046.png" type="Texture" id=3]
 [ext_resource path="res://assets/Tiles/tile_0042.png" type="Texture" id=4]
 [ext_resource path="res://assets/Tiles/tile_0041.png" type="Texture" id=5]
 [ext_resource path="res://Player/Player.gd" type="Script" id=6]
 [ext_resource path="res://assets/Tiles/tile_0045.png" type="Texture" id=7]
+[ext_resource path="res://assets/fonts/JetBrainsMono-Regular.ttf" type="DynamicFontData" id=8]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -14,19 +16,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ) ],
-"loop": true,
-"name": "gun_jump",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 2 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "gun_shoot",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 2 ) ],
+"frames": [ ExtResource( 5 ) ],
 "loop": true,
-"name": "gun_walk",
+"name": "gun_jump",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 3 ) ],
@@ -41,7 +38,22 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 3 ), ExtResource( 7 ) ],
 "loop": true,
-"name": "walk",
+"name": "run",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "gun_run",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "fall",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "gun_fall",
 "speed": 5.0
 } ]
 
@@ -49,15 +61,24 @@ animations = [ {
 radius = 4.0
 height = 4.0
 
+[sub_resource type="DynamicFont" id=3]
+size = 12
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 8 )
+
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 0
 script = ExtResource( 6 )
+
+[node name="PlayerSM" type="Node" parent="."]
+script = ExtResource( 1 )
 
 [node name="Body" type="Node2D" parent="."]
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Body"]
 frames = SubResource( 1 )
-animation = "idle"
+animation = "gun_fall"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 2 )
@@ -79,3 +100,16 @@ cast_to = Vector2( 0, 5 )
 position = Vector2( -3, 8 )
 enabled = true
 cast_to = Vector2( 0, 5 )
+
+[node name="StateLabel" type="Label" parent="."]
+margin_left = -26.0
+margin_top = -24.0
+margin_right = 26.0
+margin_bottom = -7.0
+custom_fonts/font = SubResource( 3 )
+text = "idle"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

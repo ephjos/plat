@@ -12,25 +12,14 @@ var is_grounded = false
 onready var raycasts = $Raycasts
 onready var animPlayer = $Body/AnimatedSprite
 
-
-func _physics_process(delta):
-	_get_input()
+func _apply_gravity(delta):
 	velocity.y += gravity * delta
 	
+func _apply_movement():
 	velocity = move_and_slide(velocity, UP)
+	is_grounded = _is_on_floor()
 	
-	is_grounded = _check_is_grounded()
-	
-	_assign_animation()
-	
-func _input(event):
-	if event.is_action_pressed("jump") && is_grounded:
-		velocity.y = jump_velocity
-	
-	if event.is_action_released("jump") && velocity.y < min_jump_velocity:
-		velocity.y = min_jump_velocity
-	
-func _get_input():
+func _handle_move_input():
 	var move_direction = -int(Input.is_action_pressed("move_left")) + int(Input.is_action_pressed("move_right"))
 	velocity.x = lerp(velocity.x, move_speed * move_direction, _get_h_weight())
 	
@@ -38,22 +27,15 @@ func _get_input():
 		$Body.scale.x = move_direction
 		
 func _get_h_weight():
-	return 0.5 if is_grounded else 0.1
+	return 0.8 if is_grounded else 0.4
 
-func _check_is_grounded():
+func _is_on_floor():
 	for raycast in raycasts.get_children():
 		if raycast.is_colliding():
 			return true
 	return false
-	
-func _assign_animation():
-	var anim = "idle"
-	
-	if !is_grounded:
-		anim = "jump"
-	elif abs(velocity.x) > 4:
-		anim = "walk"
-	
+
+func _play_animation(anim):
 	if animPlayer.animation != anim:
 		animPlayer.animation = anim
 		animPlayer.play()
