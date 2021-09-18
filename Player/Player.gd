@@ -1,12 +1,10 @@
 extends KinematicBody2D
 
-const UP = Vector2(0, -1)
 var velocity = Vector2()
 
 var move_speed = 10 * 16
 var jump_velocity = -425
 var min_jump_velocity = -200
-var gravity = 1200
 var wall_slide_gravity = 64
 var is_grounded = false
 var move_direction
@@ -22,6 +20,9 @@ onready var floorRaycasts = $FloorRaycasts
 onready var leftWallRaycasts = $WallRaycasts/Left
 onready var rightWallRaycasts = $WallRaycasts/Right
 
+func _ready():
+	Globals.PLAYER = self
+
 func jump():
 	velocity.y = jump_velocity
 	
@@ -29,7 +30,7 @@ func variable_jump():
 	velocity.y = min_jump_velocity
 	
 func wall_jump():
-	var wall_jump_velocity = Vector2(200, -400)
+	var wall_jump_velocity = Vector2(300, -400)
 	wall_jump_velocity.x *= -wall_direction
 	velocity = wall_jump_velocity
 	
@@ -38,10 +39,10 @@ func _cap_wall_slide_gravity():
 	velocity.y = min(velocity.y, wall_slide_gravity + (modifier*wall_slide_gravity))
 	
 func _apply_gravity(delta):
-	velocity.y += gravity * delta
+	velocity.y += Globals.GRAVITY * delta
 	
 func _apply_movement():
-	velocity = move_and_slide(velocity, UP)
+	velocity = move_and_slide(velocity, Globals.UP)
 	is_grounded = _is_on_floor()
 	
 func _handle_move_input():
@@ -61,8 +62,9 @@ func _get_h_weight():
 	if is_grounded:
 		return 0.8
 		
-	if !wallJumpTimer.is_stopped():
+	if wall_direction != 0 || !wallJumpTimer.is_stopped():
 		return 0.02
+	
 	return 0.4
 	
 func _update_move_direction():
