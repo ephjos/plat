@@ -9,23 +9,25 @@ func _ready():
 	call_deferred("set_state", states.idle)
 	
 func _input(event):
-	if [states.idle, states.run].has(state):
-		if event.is_action_pressed("jump"):
-			parent.jump()
-	
-	if state == states.fall && !parent.coyoteTimer.is_stopped():
-		if event.is_action_pressed("jump"):
+	if event.is_action_pressed("jump"):
+		# Normal grounded jump
+		if [states.idle, states.run].has(state):
+			parent._jump()
+		
+		# If falling but still in coyote time
+		if state == states.fall && !parent.coyoteTimer.is_stopped():
 			parent.coyoteTimer.stop()
-			parent.jump()
-	
-	if state == states.jump:
-		if event.is_action_released("jump") && parent.velocity.y < parent.min_jump_velocity:
-			parent.variable_jump()
-			
-	if state == states.wall_slide:
-		if event.is_action_pressed("jump"):
-			parent.wall_jump()
+			parent._jump()
+
+		# If on a wall
+		if state == states.wall_slide:
+			parent._wall_jump()
 			set_state(states.jump)
+	
+	# If jumping and space was released, perform a shorter jump
+	if state == states.jump:
+		if event.is_action_released("jump") && parent.velocity.y < parent.MIN_JUMP_SPEED:
+			parent._variable_jump()
 		
 func _state_logic(delta):
 	parent._update_move_direction()
@@ -95,10 +97,12 @@ func _enter_state(new_state, old_state):
 			parent._play_animation("jump")
 		states.fall:
 			parent._play_animation("fall")
+			# Enter coyote time when running off a ledge
 			if old_state == states.run:
 				parent.coyoteTimer.start()
 		states.wall_slide:
 			parent._play_animation("wall_slide")
+			# Face away from the wall
 			parent.body.scale.x = -parent.wall_direction
 				
 	return null
