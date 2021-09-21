@@ -6,11 +6,11 @@ const MOVE_SPEED = 10 * Globals.TILE_SIZE # 10 tiles per second
 const JUMP_SPEED = -425
 const MIN_JUMP_SPEED = -200
 const WALL_SLIDE_GRAVITY = 64
-const WALL_JUMP_VECTOR = Vector2(300, -400)
+const WALL_JUMP_VECTOR = Vector2(MOVE_SPEED*2, JUMP_SPEED)
 
 var velocity = Vector2()
 var is_grounded = false
-var move_direction
+var move_direction = 0
 var wall_direction = 1
 
 onready var body = $Body
@@ -72,7 +72,8 @@ func _get_h_weight():
 	return 0.4
 
 func _update_move_direction():
-	move_direction = -int(Input.is_action_pressed("move_left")) + int(Input.is_action_pressed("move_right"))
+	move_direction = -int(Input.is_action_pressed("move_left")) \
+		+ int(Input.is_action_pressed("move_right"))
 	
 # Check for walls
 func _update_wall_direction():
