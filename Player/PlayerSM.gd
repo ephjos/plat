@@ -57,8 +57,8 @@ func _state_logic(delta):
 		parent._handle_wall_slide_stick()
 	parent._apply_movement()
 	
-	# Debug display
-	parent.get_node("PlayerState").text = states.keys()[state]
+	if Globals.DEBUG:
+		parent.get_node("PlayerState").text = states.keys()[state]
 	
 func _get_transition(delta):
 	var x = parent.velocity.x

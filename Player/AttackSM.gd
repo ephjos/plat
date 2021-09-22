@@ -14,8 +14,8 @@ func _input(event):
 		set_state(states.attack)
 		
 func _state_logic(_delta):
-	# Debug display
-	parent.get_node("AttackState").text = states.keys()[state]
+	if Globals.DEBUG:
+		parent.get_node("AttackState").text = states.keys()[state]
 
 func _enter_state(new_state, old_state):
 	match new_state:
