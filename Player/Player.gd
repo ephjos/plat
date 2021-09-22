@@ -1,6 +1,8 @@
 extends KinematicBody2D
 class_name Player
 
+const Bullet : PackedScene = preload("res://Bullet/Bullet.tscn")
+
 # Constants
 const MOVE_SPEED = 10 * Globals.TILE_SIZE # 10 tiles per second
 const JUMP_SPEED = -425
@@ -12,9 +14,13 @@ var velocity = Vector2()
 var is_grounded = false
 var move_direction = 0
 var wall_direction = 1
+var can_shoot = true
 
 onready var body = $Body
+onready var muzzle = $Body/Muzzle
+
 onready var animPlayer = $Body/AnimatedSprite
+onready var gunAnimPlayer = $Body/Muzzle/Flash/AnimationPlayer
 
 onready var wallJumpTimer = $WallJumpTimer
 onready var wallStickTimer = $WallStickTimer
@@ -23,6 +29,7 @@ onready var coyoteTimer = $CoyoteTimer
 onready var floorRaycasts = $FloorRaycasts
 onready var leftWallRaycasts = $WallRaycasts/Left
 onready var rightWallRaycasts = $WallRaycasts/Right
+onready var muzzleCheck = $Body/MuzzleCheck
 
 func _ready():
 	Globals.PLAYER = self
@@ -97,7 +104,7 @@ func _is_on_floor():
 	for raycast in floorRaycasts.get_children():
 		if raycast.is_colliding():
 			return true
-	return false		
+	return false
 	
 # Add delay before moving off of wall, give window to jump
 func _handle_wall_slide_stick():
@@ -106,9 +113,20 @@ func _handle_wall_slide_stick():
 			wallStickTimer.start()
 	else:
 		wallStickTimer.stop()
+		
+func _can_shoot():
+	return !muzzleCheck.is_colliding()
+		
+func _attack():
+	var bullet = Bullet.instance()
+	owner.add_child(bullet)
+	bullet.transform = muzzle.global_transform
 	
 # Ensure animation is not needlessly restarted
 func _play_animation(anim):
 	if animPlayer.animation != anim:
 		animPlayer.animation = anim
 		animPlayer.play()
+		
+func _play_gun_animation(anim):
+	gunAnimPlayer.play(anim)

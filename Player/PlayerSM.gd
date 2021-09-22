@@ -1,5 +1,22 @@
 extends "res://StateMachine/StateMachine.gd"
 
+onready var attackSM = $"../AttackSM";
+
+var allAnimations = {
+	"default": {
+		"idle": "idle",
+		"run": "run",
+		"jump": "jump",
+		"fall": "fall",
+	},
+	"gun": {
+		"idle": "gun_idle",
+		"run": "gun_run",
+		"jump": "gun_jump",
+		"fall": "gun_fall",
+	}
+}
+
 func _ready():
 	add_state("idle")
 	add_state("run")
@@ -25,7 +42,7 @@ func _input(event):
 			set_state(states.jump)
 	
 	# If jumping and space was released, perform a shorter jump
-	if state == states.jump:
+	if [states.idle, states.run, states.jump].has(state):
 		if event.is_action_released("jump") && parent.velocity.y < parent.MIN_JUMP_SPEED:
 			parent._variable_jump()
 		
@@ -41,7 +58,7 @@ func _state_logic(delta):
 	parent._apply_movement()
 	
 	# Debug display
-	parent.get_node("StateLabel").text = states.keys()[state]
+	parent.get_node("PlayerState").text = states.keys()[state]
 	
 func _get_transition(delta):
 	var x = parent.velocity.x
@@ -88,20 +105,26 @@ func _get_transition(delta):
 	return null
 	
 func _enter_state(new_state, old_state):
+	var animations
+	if attackSM.state == attackSM.states.none:
+		animations = allAnimations.default
+	else:
+		animations = allAnimations.gun
+	
 	match new_state:
 		states.idle:
-			parent._play_animation("idle")
+			parent._play_animation(animations.idle)
 		states.run:
-			parent._play_animation("run")
+			parent._play_animation(animations.run)
 		states.jump:
-			parent._play_animation("jump")
+			parent._play_animation(animations.jump)
 		states.fall:
-			parent._play_animation("fall")
+			parent._play_animation(animations.fall)
 			# Enter coyote time when running off a ledge
 			if old_state == states.run:
 				parent.coyoteTimer.start()
 		states.wall_slide:
-			parent._play_animation("wall_slide")
+			#parent._play_animation("wall_slide")
 			# Face away from the wall
 			parent.body.scale.x = -parent.wall_direction
 				
