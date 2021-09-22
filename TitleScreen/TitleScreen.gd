@@ -11,7 +11,7 @@ func _process(delta):
 	
 func _start():
 	SceneChanger.show()
-	SceneChanger.change_scene("res://World.tscn")
+	SceneChanger.change_scene("res://World.tscn", 0)
 
 func _on_Button_pressed():
 	_start()

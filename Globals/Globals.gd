@@ -2,7 +2,7 @@ extends Node
 
 var PLAYER = null
 
-const DEBUG = false
+const DEBUG = true
 
 const TILE_SIZE = 16 # px
 const GRAVITY = 1200

@@ -46,19 +46,19 @@ outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 44.6647, 23.0817 )
-
-[sub_resource type="DynamicFont" id=5]
-font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=6]
 font_data = ExtResource( 4 )
 
-[sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 104.487, 10 )
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 4 )
 
 [sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 104.487, 10 )
+
+[sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 10, 256.458 )
 
 [node name="TitleScreen" type="MarginContainer"]
@@ -121,13 +121,13 @@ script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HBoxContainer/VBoxContainer/ButtonContainer/Button/StaticBody2D"]
 position = Vector2( 44.545, 24.0817 )
-shape = SubResource( 9 )
+shape = SubResource( 5 )
 
 [node name="Version" type="Label" parent="HBoxContainer/VBoxContainer"]
 margin_top = 213.0
 margin_right = 150.0
 margin_bottom = 238.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0.666667, 0.666667, 0.666667, 1 )
 text = "Version 1.0.0 by ephjos"
 
@@ -145,7 +145,7 @@ margin_left = 52.4407
 margin_top = 151.922
 margin_right = 275.441
 margin_bottom = 232.922
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0.121569, 0.121569, 0.121569, 1 )
 text = "Move with a/d. Jump with Space.  
 Shoot with k.
@@ -160,26 +160,26 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HBoxContainer/CenterContainer/StaticBody2D"]
 position = Vector2( 158.334, 165.723 )
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( 0, 130 )
-shape = SubResource( 8 )
+position = Vector2( -10, 130 )
+shape = SubResource( 9 )
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
-position = Vector2( 514, 130 )
-shape = SubResource( 8 )
+position = Vector2( 522, 130 )
+shape = SubResource( 9 )
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
 position = Vector2( 254.812, -118.565 )
 rotation = 1.5708
-shape = SubResource( 8 )
+shape = SubResource( 9 )
 
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/ButtonContainer/Button" to="." method="_on_Button_pressed"]
 [connection signal="hit" from="HBoxContainer/VBoxContainer/ButtonContainer/Button/StaticBody2D" to="." method="_on_StaticBody2D_hit"]
