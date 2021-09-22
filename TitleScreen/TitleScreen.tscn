@@ -1,15 +1,16 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://TitleScreen/TitleScreen.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Tileset/Tileset.tres" type="TileSet" id=3]
 [ext_resource path="res://assets/fonts/Anton-Regular.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://TitleScreen/StaticBody2D.gd" type="Script" id=5]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 32
 font_data = ExtResource( 4 )
 
-[sub_resource type="StyleBoxFlat" id=7]
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.0470588, 0.2, 0.25098, 1 )
 border_width_left = 30
 border_width_top = 10
@@ -24,7 +25,7 @@ shadow_color = Color( 0.678431, 0.678431, 0.678431, 0.6 )
 shadow_size = 4
 shadow_offset = Vector2( 3, 3 )
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.172549, 0.772549, 0.964706, 1 )
 border_width_left = 30
 border_width_top = 10
@@ -39,20 +40,26 @@ shadow_color = Color( 0.678431, 0.678431, 0.678431, 0.6 )
 shadow_size = 4
 shadow_offset = Vector2( 3, 3 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=4]
 size = 18
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 44.6647, 23.0817 )
+
+[sub_resource type="DynamicFont" id=5]
 font_data = ExtResource( 4 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=6]
 font_data = ExtResource( 4 )
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 456.922, 10 )
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 104.487, 10 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 10, 256.458 )
 
 [node name="TitleScreen" type="MarginContainer"]
 anchor_right = 1.0
@@ -87,7 +94,7 @@ margin_bottom = 238.0
 [node name="Label" type="Label" parent="HBoxContainer/VBoxContainer"]
 margin_right = 150.0
 margin_bottom = 49.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.121569, 0.121569, 0.121569, 1 )
 text = " plat"
 align = 1
@@ -103,17 +110,24 @@ margin_left = 30.0
 margin_top = 54.0
 margin_right = 120.0
 margin_bottom = 102.0
-custom_styles/hover = SubResource( 7 )
-custom_styles/normal = SubResource( 5 )
-custom_fonts/font = SubResource( 6 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/normal = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Play"
+
+[node name="StaticBody2D" type="StaticBody2D" parent="HBoxContainer/VBoxContainer/ButtonContainer/Button"]
+script = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HBoxContainer/VBoxContainer/ButtonContainer/Button/StaticBody2D"]
+position = Vector2( 44.545, 24.0817 )
+shape = SubResource( 9 )
 
 [node name="Version" type="Label" parent="HBoxContainer/VBoxContainer"]
 margin_top = 213.0
 margin_right = 150.0
 margin_bottom = 238.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 0.666667, 0.666667, 0.666667, 1 )
 text = "Version 1.0.0 by ephjos"
 
@@ -123,7 +137,7 @@ margin_right = 154.0
 margin_bottom = 238.0
 
 [node name="Player" parent="HBoxContainer/CenterContainer" instance=ExtResource( 2 )]
-position = Vector2( 161.591, -1020.14 )
+position = Vector2( 161.591, -100.14 )
 scale = Vector2( 2, 2 )
 
 [node name="Controls" type="Label" parent="HBoxContainer/CenterContainer"]
@@ -131,7 +145,7 @@ margin_left = 52.4407
 margin_top = 151.922
 margin_right = 275.441
 margin_bottom = 232.922
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0.121569, 0.121569, 0.121569, 1 )
 text = "Move with a/d. Jump with Space.  
 Shoot with k.
@@ -145,7 +159,27 @@ __meta__ = {
 [node name="StaticBody2D" type="StaticBody2D" parent="HBoxContainer/CenterContainer"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HBoxContainer/CenterContainer/StaticBody2D"]
-position = Vector2( 174.352, 168.393 )
-shape = SubResource( 1 )
+position = Vector2( 158.334, 165.723 )
+shape = SubResource( 7 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 0, 130 )
+shape = SubResource( 8 )
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2( 514, 130 )
+shape = SubResource( 8 )
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2( 254.812, -118.565 )
+rotation = 1.5708
+shape = SubResource( 8 )
 
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/ButtonContainer/Button" to="." method="_on_Button_pressed"]
+[connection signal="hit" from="HBoxContainer/VBoxContainer/ButtonContainer/Button/StaticBody2D" to="." method="_on_StaticBody2D_hit"]
