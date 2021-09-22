@@ -130,3 +130,7 @@ func _play_animation(anim):
 		
 func _play_gun_animation(anim):
 	gunAnimPlayer.play(anim)
+
+func hit():
+	if !Globals.LEVEL_COMPLETE:
+		print("hit")

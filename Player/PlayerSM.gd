@@ -47,6 +47,9 @@ func _input(event):
 			parent._variable_jump()
 		
 func _state_logic(delta):
+	if Globals.LEVEL_COMPLETE:
+		parent.rotation -= 0.2
+		return
 	parent._update_move_direction()
 	parent._update_wall_direction()
 	if state != states.wall_slide:

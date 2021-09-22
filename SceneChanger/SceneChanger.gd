@@ -11,6 +11,7 @@ func change_scene(path, delay = 0.5):
 	yield(animPlayer, "animation_finished")
 	assert(get_tree().change_scene(path) == OK)
 	animPlayer.play(animOut)
+	Globals.LEVEL_COMPLETE = false
 	yield(animPlayer, "animation_finished")
 
 func hide():
