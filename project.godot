@@ -33,17 +33,19 @@ _global_script_class_icons={
 [application]
 
 config/name="plat"
-run/main_scene="res://World.tscn"
+run/main_scene="res://TitleScreen/TitleScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Globals="*res://Globals/Globals.gd"
+SceneChanger="*res://SceneChanger/SceneChanger.tscn"
 
 [display]
 
 window/size/width=512
 window/size/height=288
+window/size/resizable=false
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 

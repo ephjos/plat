@@ -118,6 +118,7 @@ func _can_shoot():
 	return !muzzleCheck.is_colliding()
 		
 func _attack():
+	SceneChanger.change_scene("res://World.tscn")
 	var bullet = Bullet.instance()
 	owner.add_child(bullet)
 	bullet.transform = muzzle.global_transform
