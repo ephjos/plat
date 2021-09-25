@@ -10,7 +10,7 @@ const MOVE_SPEED = 10 * Globals.TILE_SIZE # 10 tiles per second
 const JUMP_SPEED = -425
 const MIN_JUMP_SPEED = -200
 const WALL_SLIDE_GRAVITY = 64
-const WALL_JUMP_VECTOR = Vector2(MOVE_SPEED*2, JUMP_SPEED)
+const WALL_JUMP_VECTOR = Vector2(MOVE_SPEED*2, JUMP_SPEED*1.2)
 
 var velocity = Vector2()
 var is_grounded = false
@@ -55,7 +55,7 @@ func _apply_gravity(delta):
 	
 func _cap_wall_slide_gravity():
 	# If pressing down, add 10x gravity
-	var modifier = int(Input.is_action_pressed("move_down"))*10*WALL_SLIDE_GRAVITY
+	var modifier = int(Input.get_action_strength("move_down"))*10*WALL_SLIDE_GRAVITY
 	velocity.y = min(velocity.y, WALL_SLIDE_GRAVITY + (modifier))
 
 # Apply and update velocity, update is_grounded
@@ -69,7 +69,7 @@ func _handle_move_input():
 	
 	# Flip sprite to face movement direction
 	if move_direction != 0:
-		body.scale.x = move_direction
+		body.scale.x = sign(move_direction)
 		
 # Return the interpolation coefficient, higher = more control 
 func _get_h_weight():
@@ -84,8 +84,8 @@ func _get_h_weight():
 	return 0.4
 
 func _update_move_direction():
-	move_direction = -int(Input.is_action_pressed("move_left")) \
-		+ int(Input.is_action_pressed("move_right"))
+	move_direction = -float(Input.get_action_strength("move_left")) \
+		+ float(Input.get_action_strength("move_right"))
 	
 # Check for walls
 func _update_wall_direction():
@@ -93,7 +93,7 @@ func _update_wall_direction():
 	var is_right = _is_on_wall(rightWallRaycasts)
 	
 	if is_left && is_right:
-		wall_direction = move_direction
+		wall_direction = sign(move_direction)
 	else:
 		wall_direction = -int(is_left) + int(is_right)
 	
@@ -149,9 +149,7 @@ func fell(body):
 	health = 0
 	Hud.set_health(health)
 	die()
-	# TODO: reset
 
 func die():
 	dead = true
-	# TODO: animate
 	emit_signal("dead")
