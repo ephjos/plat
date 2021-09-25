@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://SceneChanger/SceneChanger.gd" type="Script" id=1]
+[ext_resource path="res://Post processing tool/PostProcessing_tool.tscn" type="PackedScene" id=2]
 
 [sub_resource type="Animation" id=1]
 resource_name = "fade"
@@ -75,3 +76,14 @@ __meta__ = {
 anims/fade = SubResource( 1 )
 anims/slide_in = SubResource( 2 )
 anims/slide_out = SubResource( 3 )
+
+[node name="PostProcessing_tool" parent="." instance=ExtResource( 2 )]
+bloom_show = true
+bloom_threshold = 0.85
+chromatc_aberration_show = true
+chromatc_aberration_strength = 0.1
+glitch_power = 0.0
+glitch_rate = 0.01
+glitch_speed = 10.0
+glitch_block_size = 1.0
+vignette_scale = 1.2
