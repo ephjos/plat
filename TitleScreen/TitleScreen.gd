@@ -1,6 +1,7 @@
-extends CanvasLayer
+extends Control
 
 onready var player = $HBoxContainer/CenterContainer/Player
+var scroll = 0
 
 func add_collider(position, extents):
 	var static_body = StaticBody2D.new()
@@ -15,7 +16,6 @@ func add_collider(position, extents):
 
 func _ready():
 	Hud.hide()
-	player.body.scale.x = -1
 	
 	var left = 0
 	var right = 0
@@ -39,10 +39,13 @@ func _ready():
 	add_collider(Vector2(right+size, top), Vector2(size, bottom-top)) # right
 	add_collider(Vector2(left, top-size), Vector2(right-left, size)) # top
 	add_collider(Vector2(left, bottom), Vector2(right-left, size)) # bottom
-	
 
 func _start():
 	SceneChanger.change_scene("res://Levels/Level_01.tscn", 0)
+	
+func _process(delta):
+	scroll = lerp(scroll, 128, 0.05)
+	$ParallaxBackground.scroll_offset.x -= scroll * delta
 
 func _on_Button_pressed():
 	_start()
@@ -51,5 +54,7 @@ func _on_StaticBody2D_hit():
 	_start()
 
 func _input(event):
+	if event.is_action_pressed("jump"):
+		SceneChanger.change_scene("res://Levels/Level_01.tscn", 0)
 	if event.is_action_pressed("controls"):
 		SceneChanger.change_scene("res://Controls/Controls.tscn", 0)
