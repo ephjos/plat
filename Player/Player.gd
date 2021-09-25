@@ -1,6 +1,8 @@
 extends KinematicBody2D
 class_name Player
 
+signal dead
+
 const Bullet : PackedScene = preload("res://Bullet/Bullet.tscn")
 
 # Constants
@@ -15,6 +17,8 @@ var is_grounded = false
 var move_direction = 0
 var wall_direction = 1
 var can_shoot = true
+var health = 3
+var dead = false
 
 onready var body = $Body
 onready var muzzle = $Body/Muzzle
@@ -33,6 +37,7 @@ onready var muzzleCheck = $Body/MuzzleCheck
 
 func _ready():
 	Globals.PLAYER = self
+	Hud.set_health(health)
 
 func _jump():
 	velocity.y = JUMP_SPEED
@@ -115,6 +120,8 @@ func _handle_wall_slide_stick():
 		wallStickTimer.stop()
 		
 func _can_shoot():
+	if dead || Globals.LEVEL_COMPLETE:
+		return false
 	return !muzzleCheck.is_colliding()
 		
 func _attack():
@@ -133,10 +140,18 @@ func _play_gun_animation(anim):
 
 func hit():
 	if !Globals.LEVEL_COMPLETE:
-		print("hit")
+		health -= 1
+		Hud.set_health(health)
+	if health == 0:
+		die()
 		
 func fell(body):
-	print("dead!")
-	# TODO: die
-	# TODO: animate
+	health = 0
+	Hud.set_health(health)
+	die()
 	# TODO: reset
+
+func die():
+	dead = true
+	# TODO: animate
+	emit_signal("dead")

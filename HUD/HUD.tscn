@@ -1,0 +1,154 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/heart_8x8.png" type="Texture" id=1]
+[ext_resource path="res://HUD/HUD.gd" type="Script" id=2]
+[ext_resource path="res://Post processing tool/PostProcessing_tool.tscn" type="PackedScene" id=3]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://assets/fonts/Anton-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 12
+font_data = SubResource( 1 )
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource( 2 )
+
+[node name="PostProcessing_tool" parent="." instance=ExtResource( 3 )]
+bloom_show = true
+bloom_threshold = 0.85
+chromatc_aberration_show = true
+chromatc_aberration_strength = 0.1
+glitch_power = 0.0
+glitch_rate = 0.01
+glitch_speed = 10.0
+glitch_block_size = 1.0
+vignette_scale = 1.2
+
+[node name="Health" type="Control" parent="."]
+margin_left = -2.38419e-07
+margin_top = 16.0
+margin_right = 38.0
+margin_bottom = 32.0
+rect_scale = Vector2( 1.79461, 1.65291 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="0" type="Control" parent="Health"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1" type="Sprite" parent="Health/0"]
+position = Vector2( 8, 8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 8, 8, 8 )
+
+[node name="2" type="Sprite" parent="Health/0"]
+position = Vector2( 18, 8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 8, 8, 8 )
+
+[node name="3" type="Sprite" parent="Health/0"]
+position = Vector2( 28, 8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 8, 8, 8 )
+
+[node name="1" type="Control" parent="Health"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1" type="Sprite" parent="Health/1"]
+position = Vector2( 8, 8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 8, 8 )
+
+[node name="2" type="Sprite" parent="Health/1"]
+position = Vector2( 18, 8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 8, 8, 8 )
+
+[node name="3" type="Sprite" parent="Health/1"]
+position = Vector2( 28, 8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 8, 8, 8 )
+
+[node name="2" type="Control" parent="Health"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1" type="Sprite" parent="Health/2"]
+position = Vector2( 8, 8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 8, 8 )
+
+[node name="2" type="Sprite" parent="Health/2"]
+position = Vector2( 18, 8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 8, 8 )
+
+[node name="3" type="Sprite" parent="Health/2"]
+position = Vector2( 28, 8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 8, 8, 8 )
+
+[node name="3" type="Control" parent="Health"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1" type="Sprite" parent="Health/3"]
+position = Vector2( 8, 8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 8, 8 )
+
+[node name="2" type="Sprite" parent="Health/3"]
+position = Vector2( 18, 8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 8, 8 )
+
+[node name="3" type="Sprite" parent="Health/3"]
+position = Vector2( 28, 8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 8, 8 )
+
+[node name="Level" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Level"]
+margin_left = 4.0
+margin_right = 76.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 2 )
+text = "Level 01"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -25,7 +25,8 @@ position = Vector2( 206.79, 171.936 )
 [node name="Camera" parent="Player" instance=ExtResource( 3 )]
 
 [node name="Goal" parent="." instance=ExtResource( 4 )]
-position = Vector2( 57.4467, 98.1615 )
+position = Vector2( 279.683, 211.264 )
 
+[connection signal="dead" from="Player" to="." method="_on_Player_dead"]
 [connection signal="finish" from="Goal" to="." method="_on_Goal_finish"]
 [connection signal="hit" from="Goal" to="." method="_on_Goal_hit"]

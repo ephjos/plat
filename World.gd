@@ -49,9 +49,14 @@ func _ready():
 	add_collider(Vector2(left, bottom), Vector2(right-left, size)) # bottom
 	add_fall_zone(Vector2(left, bottom-size-size), Vector2(right-left, size))
 	
+	Hud.set_level("Level 01")
+	Hud.show()
 
 func _on_Goal_finish():
 	SceneChanger.change_scene("res://World.tscn")
 
 func _on_Goal_hit():
 	Globals.LEVEL_COMPLETE = true
+
+func _on_Player_dead():
+	SceneChanger.change_scene("res://World.tscn")

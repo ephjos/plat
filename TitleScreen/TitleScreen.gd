@@ -1,9 +1,11 @@
-extends Control
+extends CanvasLayer
 
 onready var player = $HBoxContainer/CenterContainer/Player
 
 func _ready():
 	SceneChanger.hide()
+	Hud.hide()
+	player.body.scale.x = -1
 
 func _process(delta):
 	#player._play_animation("run")

@@ -47,6 +47,10 @@ func _input(event):
 			parent._variable_jump()
 		
 func _state_logic(delta):
+	if parent.dead:
+		parent.rotation += 0.2
+		parent.position.y -= 2
+		return
 	if Globals.LEVEL_COMPLETE:
 		parent.rotation -= 0.2
 		parent.scale /= 1.05
