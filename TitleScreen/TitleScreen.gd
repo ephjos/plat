@@ -1,6 +1,11 @@
 extends Control
 
 onready var player = $HBoxContainer/CenterContainer/Player
+
+onready var controls1 = $HBoxContainer/VBoxContainer/Controls1
+onready var controls2 = $HBoxContainer/VBoxContainer/Controls2
+
+
 var scroll = 0
 
 func add_collider(position, extents):
@@ -15,6 +20,7 @@ func add_collider(position, extents):
 	collider.shape.extents = extents
 
 func _ready():
+	controls2.hide()
 	Hud.hide()
 	
 	var left = 0
@@ -58,3 +64,12 @@ func _input(event):
 		SceneChanger.change_scene("res://Levels/Level_01.tscn", 0)
 	if event.is_action_pressed("controls"):
 		SceneChanger.change_scene("res://Controls/Controls.tscn", 0)
+
+
+func _on_ControlsTimer_timeout():
+	if controls1.visible:
+		controls1.hide()
+		controls2.show()
+	else:
+		controls2.hide()
+		controls1.show()

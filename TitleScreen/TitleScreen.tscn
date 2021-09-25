@@ -110,13 +110,13 @@ align = 1
 [node name="ButtonContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer"]
 margin_top = 77.0
 margin_right = 158.0
-margin_bottom = 180.0
+margin_bottom = 151.0
 size_flags_vertical = 3
 
 [node name="Button" type="Button" parent="HBoxContainer/VBoxContainer/ButtonContainer"]
-margin_top = 27.0
+margin_top = 13.0
 margin_right = 158.0
-margin_bottom = 75.0
+margin_bottom = 61.0
 custom_styles/hover = SubResource( 2 )
 custom_styles/normal = SubResource( 3 )
 custom_fonts/font = SubResource( 4 )
@@ -133,19 +133,23 @@ script = ExtResource( 5 )
 position = Vector2( 79.8581, 24.9592 )
 shape = SubResource( 5 )
 
-[node name="Version" type="Label" parent="HBoxContainer/VBoxContainer"]
-anchor_left = 0.0253165
-anchor_right = 0.0253165
+[node name="Controls1" type="Label" parent="HBoxContainer/VBoxContainer"]
+margin_top = 155.0
+margin_right = 158.0
+margin_bottom = 180.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Push c for controls"
+
+[node name="Controls2" type="Label" parent="HBoxContainer/VBoxContainer"]
 margin_top = 184.0
 margin_right = 158.0
 margin_bottom = 209.0
 custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Push c for controls"
+text = "Push Select for controls"
 
 [node name="Version2" type="Label" parent="HBoxContainer/VBoxContainer"]
-anchor_left = 0.0253165
-anchor_right = 0.0253165
 margin_top = 213.0
 margin_right = 158.0
 margin_bottom = 238.0
@@ -162,7 +166,6 @@ margin_bottom = 238.0
 position = Vector2( 78, 220 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 7 )
-frame = 1
 playing = true
 
 [node name="PostProcessing_tool" parent="." instance=ExtResource( 6 )]
@@ -176,5 +179,10 @@ glitch_speed = 10.0
 glitch_block_size = 1.0
 vignette_scale = 1.2
 
+[node name="ControlsTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/ButtonContainer/Button" to="." method="_on_Button_pressed"]
 [connection signal="hit" from="HBoxContainer/VBoxContainer/ButtonContainer/Button/StaticBody2D" to="." method="_on_StaticBody2D_hit"]
+[connection signal="timeout" from="ControlsTimer" to="." method="_on_ControlsTimer_timeout"]
