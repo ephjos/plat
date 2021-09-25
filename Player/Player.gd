@@ -134,3 +134,9 @@ func _play_gun_animation(anim):
 func hit():
 	if !Globals.LEVEL_COMPLETE:
 		print("hit")
+		
+func fell(body):
+	print("dead!")
+	# TODO: die
+	# TODO: animate
+	# TODO: reset

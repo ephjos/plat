@@ -18,6 +18,11 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 5 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "gun_run",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
 "name": "fall",
@@ -31,11 +36,6 @@ animations = [ {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
 "name": "jump",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 5 ), ExtResource( 2 ) ],
-"loop": true,
-"name": "gun_run",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
@@ -99,7 +99,7 @@ font_data = ExtResource( 8 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
-collision_mask = 29
+collision_mask = 61
 script = ExtResource( 6 )
 
 [node name="PlayerSM" type="Node" parent="."]
@@ -130,8 +130,7 @@ animation = "gun_idle"
 position = Vector2( 8, 2.5 )
 
 [node name="Flash" type="Sprite" parent="Body/Muzzle"]
-visible = false
-scale = Vector2( 2, 0.25 )
+scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 10 )
 offset = Vector2( 7, 0 )
 
@@ -147,25 +146,26 @@ position = Vector2( 0, 2 )
 shape = SubResource( 3 )
 
 [node name="FloorRaycasts" type="Node2D" parent="."]
-visible = false
 
 [node name="RayCast2D" type="RayCast2D" parent="FloorRaycasts"]
 position = Vector2( 3, 8 )
 enabled = true
 cast_to = Vector2( 0, 8 )
+collision_mask = 33
 
 [node name="RayCast2D2" type="RayCast2D" parent="FloorRaycasts"]
 position = Vector2( 0, 8 )
 enabled = true
 cast_to = Vector2( 0, 8 )
+collision_mask = 33
 
 [node name="RayCast2D3" type="RayCast2D" parent="FloorRaycasts"]
 position = Vector2( -3, 8 )
 enabled = true
 cast_to = Vector2( 0, 8 )
+collision_mask = 33
 
 [node name="WallRaycasts" type="Node2D" parent="."]
-visible = false
 
 [node name="Left" type="Node2D" parent="WallRaycasts"]
 

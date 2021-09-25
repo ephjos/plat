@@ -49,6 +49,8 @@ func _input(event):
 func _state_logic(delta):
 	if Globals.LEVEL_COMPLETE:
 		parent.rotation -= 0.2
+		parent.scale /= 1.05
+		parent.position = lerp(parent.position, Globals.GOAL.position, 0.2)
 		return
 	parent._update_move_direction()
 	parent._update_wall_direction()

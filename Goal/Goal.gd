@@ -5,6 +5,9 @@ signal finish;
 
 onready var particles = $CPUParticles2D
 
+func _ready():
+	Globals.GOAL = self
+
 func _on_Goal_body_entered(body):
 	emit_signal("hit")
 	particles.initial_velocity = 150
