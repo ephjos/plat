@@ -3,17 +3,11 @@ extends CanvasLayer
 onready var player = $HBoxContainer/CenterContainer/Player
 
 func _ready():
-	SceneChanger.hide()
 	Hud.hide()
 	player.body.scale.x = -1
 
-func _process(delta):
-	#player._play_animation("run")
-	pass
-	
 func _start():
-	SceneChanger.show()
-	SceneChanger.change_scene("res://World.tscn", 0)
+	SceneChanger.change_scene("res://Levels/Level_01.tscn", 0)
 
 func _on_Button_pressed():
 	_start()

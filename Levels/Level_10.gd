@@ -1,8 +1,5 @@
 extends Node2D
 
-func test(body):
-	print("AA")
-	
 func add_collider(position, extents):
 	var static_body = StaticBody2D.new()
 	add_child(static_body)
@@ -49,14 +46,14 @@ func _ready():
 	add_collider(Vector2(left, bottom), Vector2(right-left, size)) # bottom
 	add_fall_zone(Vector2(left, bottom-size-size), Vector2(right-left, size))
 	
-	Hud.set_level("Level 01")
+	Hud.set_level("Level_10")
 	Hud.show()
 
 func _on_Goal_finish():
-	SceneChanger.change_scene("res://World.tscn")
+	SceneChanger.change_scene("res://Levels/Level_11.tscn")
 
 func _on_Goal_hit():
 	Globals.LEVEL_COMPLETE = true
 
 func _on_Player_dead():
-	SceneChanger.change_scene("res://World.tscn")
+	SceneChanger.change_scene("res://Levels/Level_10.tscn")

@@ -1,6 +1,6 @@
 extends Node
 
-const DEBUG = true
+const DEBUG = false
 
 const TILE_SIZE = 16 # px
 const GRAVITY = 1200
@@ -10,3 +10,4 @@ var PLAYER = null
 var GOAL = null
 
 var LEVEL_COMPLETE = false
+
