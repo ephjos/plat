@@ -8,6 +8,7 @@ const UP = Vector2(0, -1)
 
 var PLAYER = null
 var GOAL = null
+var CAMERA = null
 
 var LEVEL_COMPLETE = false
 

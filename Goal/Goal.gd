@@ -10,6 +10,7 @@ func _ready():
 
 func _on_Goal_body_entered(body):
 	emit_signal("hit")
+	Globals.CAMERA.win()
 	particles.initial_velocity = 150
 	yield(get_tree().create_timer(0.5), "timeout")
 	particles.emitting = false

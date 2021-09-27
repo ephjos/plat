@@ -53,7 +53,7 @@ func _state_logic(delta):
 		return
 	if Globals.LEVEL_COMPLETE:
 		parent.rotation -= 0.2
-		parent.scale /= 1.05
+		parent.scale /= 1.03
 		parent.position = lerp(parent.position, Globals.GOAL.position, 0.2)
 		return
 	parent._update_move_direction()

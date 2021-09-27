@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://GameOver/GameOver.gd" type="Script" id=1]
+[ext_resource path="res://Goal/Goal.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Tileset/Tileset.tres" type="TileSet" id=3]
 [ext_resource path="res://Post processing tool/PostProcessing_tool.tscn" type="PackedScene" id=6]
 
@@ -73,3 +74,9 @@ glitch_rate = 0.01
 glitch_speed = 10.0
 glitch_block_size = 1.0
 vignette_scale = 1.2
+
+[node name="Goal" parent="." instance=ExtResource( 2 )]
+position = Vector2( 185.406, 145.676 )
+
+[node name="Goal2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 323.406, 145.676 )

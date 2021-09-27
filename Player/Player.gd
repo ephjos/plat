@@ -86,6 +86,8 @@ func _get_h_weight():
 func _update_move_direction():
 	move_direction = -float(Input.get_action_strength("move_left")) \
 		+ float(Input.get_action_strength("move_right"))
+	if is_on_ceiling():
+		Globals.CAMERA.set_trauma(0.25)
 	
 # Check for walls
 func _update_wall_direction():
@@ -128,6 +130,8 @@ func _attack():
 	var bullet = Bullet.instance()
 	owner.add_child(bullet)
 	bullet.transform = muzzle.global_transform
+	Globals.CAMERA.set_trauma(0.12)
+	
 	
 # Ensure animation is not needlessly restarted
 func _play_animation(anim):
@@ -144,6 +148,8 @@ func hit():
 		Hud.set_health(health)
 	if health == 0:
 		die()
+	else:		
+		Globals.CAMERA.add_trauma(0.3)
 		
 func fell(body):
 	health = 0
@@ -152,4 +158,5 @@ func fell(body):
 
 func die():
 	dead = true
+	Globals.CAMERA.add_trauma(0.5)
 	emit_signal("dead")
