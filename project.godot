@@ -34,9 +34,9 @@ _global_script_class_icons={
 
 config/name="plat"
 run/main_scene="res://TitleScreen/TitleScreen.tscn"
-config/icon="res://assets/Tiles/tile_0041.png"
-config/macos_native_icon="res://assets/Tiles/tile_0041.png"
-config/windows_native_icon="res://assets/Tiles/tile_0041.png"
+config/icon="res://icon.png"
+config/macos_native_icon="res://icon.png"
+config/windows_native_icon="res://icon.png"
 
 [autoload]
 
@@ -51,6 +51,10 @@ window/size/height=288
 window/size/resizable=false
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
+
+[global]
+
+icon=false
 
 [input]
 
