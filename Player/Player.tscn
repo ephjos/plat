@@ -18,14 +18,24 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "gun_idle",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 5 ), ExtResource( 2 ) ],
 "loop": true,
 "name": "gun_run",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "gun_shoot",
+"speed": 20.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "gun_jump",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "gun_fall",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 3 ) ],
@@ -43,20 +53,10 @@ animations = [ {
 "name": "jump",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
-"name": "gun_jump",
+"name": "gun_idle",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 5 ) ],
-"loop": true,
-"name": "gun_fall",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 2 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "gun_shoot",
-"speed": 20.0
 } ]
 
 [sub_resource type="Animation" id=2]

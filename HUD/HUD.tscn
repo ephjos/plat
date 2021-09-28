@@ -23,7 +23,7 @@ glitch_power = 0.0
 glitch_rate = 0.01
 glitch_speed = 10.0
 glitch_block_size = 1.0
-vignette_scale = 1.2
+vignette_scale = 1.8
 
 [node name="Health" type="Control" parent="."]
 margin_left = -2.38419e-07

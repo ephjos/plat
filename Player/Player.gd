@@ -152,6 +152,8 @@ func hit():
 		Globals.CAMERA.add_trauma(0.3)
 		
 func fell(body):
+	if body != self:
+		return
 	health = 0
 	Hud.set_health(health)
 	die()
