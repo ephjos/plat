@@ -25,10 +25,12 @@ onready var muzzle = $Body/Muzzle
 
 onready var animPlayer = $Body/AnimatedSprite
 onready var gunAnimPlayer = $Body/Muzzle/Flash/AnimationPlayer
+onready var bodyPlayer = $Body/BodyPlayer
 
 onready var wallJumpTimer = $WallJumpTimer
 onready var wallStickTimer = $WallStickTimer
 onready var coyoteTimer = $CoyoteTimer
+onready var invulnTimer = $InvulnTimer
 
 onready var floorRaycasts = $FloorRaycasts
 onready var leftWallRaycasts = $WallRaycasts/Left
@@ -86,8 +88,6 @@ func _get_h_weight():
 func _update_move_direction():
 	move_direction = -float(Input.get_action_strength("move_left")) \
 		+ float(Input.get_action_strength("move_right"))
-	if is_on_ceiling():
-		Globals.CAMERA.set_trauma(0.25)
 	
 # Check for walls
 func _update_wall_direction():
@@ -143,13 +143,19 @@ func _play_gun_animation(anim):
 	gunAnimPlayer.play(anim)
 
 func hit():
-	if !Globals.LEVEL_COMPLETE:
-		health -= 1
-		Hud.set_health(health)
+	if Globals.LEVEL_COMPLETE:
+		return
+		
+	if !invulnTimer.is_stopped():
+		return
+	
+	health -= 1
+	Hud.set_health(health)
+	invulnTimer.start()
+	bodyPlayer.play("hurt")
 	if health == 0:
 		die()
-	else:		
-		Globals.CAMERA.add_trauma(0.3)
+	Globals.CAMERA.add_trauma(0.3)
 		
 func fell(body):
 	if body != self:
