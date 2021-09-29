@@ -7,7 +7,6 @@ onready var floorRaycasts = $FloorRaycasts
 onready var sideRaycasts = $SideRaycasts
 
 func hit():
-	# TODO: animate
 	queue_free()
 
 func _ready():

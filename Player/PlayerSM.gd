@@ -73,7 +73,7 @@ func _get_transition(delta):
 	var x = parent.velocity.x
 	var y = parent.velocity.y
 	var is_grounded = parent.is_grounded
-	
+	print(is_grounded)
 	match state:
 		states.idle:
 			if !is_grounded:

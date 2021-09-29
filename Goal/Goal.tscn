@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Goal/Goal.gd" type="Script" id=1]
+[ext_resource path="res://assets/sounds/goalEntered.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/sounds/goalOpened.wav" type="AudioStream" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 11.275
@@ -25,5 +27,13 @@ scale_amount = 3.0
 scale_amount_random = 1.0
 hue_variation = 1.0
 hue_variation_random = 1.0
+
+[node name="GoalEntered" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 2 )
+
+[node name="GoalOpened" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+volume_db = -10.0
+autoplay = true
 
 [connection signal="body_entered" from="." to="." method="_on_Goal_body_entered"]

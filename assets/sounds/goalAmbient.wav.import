@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/goalAmbient.wav-36820b8bfd5608b2a190ff039fcf2981.sample"
+
+[deps]
+
+source_file="res://assets/sounds/goalAmbient.wav"
+dest_files=[ "res://.import/goalAmbient.wav-36820b8bfd5608b2a190ff039fcf2981.sample" ]
+
+[params]
+
+force/8_bit=true
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=true
+compress/mode=0

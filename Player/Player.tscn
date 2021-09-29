@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Player/PlayerSM.gd" type="Script" id=1]
 [ext_resource path="res://assets/Tiles/tile_0040.png" type="Texture" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://assets/fonts/JetBrainsMono-Regular.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://Player/AttackSM.gd" type="Script" id=9]
 [ext_resource path="res://assets/Tiles/tile_0043.png" type="Texture" id=10]
+[ext_resource path="res://assets/sounds/hurt.wav" type="AudioStream" id=11]
+[ext_resource path="res://assets/sounds/dead.wav" type="AudioStream" id=12]
 
 [sub_resource type="Shader" id=1]
 resource_local_to_scene = true
@@ -37,6 +39,11 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 5 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "gun_run",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
 "name": "fall",
@@ -52,16 +59,6 @@ animations = [ {
 "name": "jump",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 2 ) ],
-"loop": true,
-"name": "gun_run",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 5 ) ],
-"loop": true,
-"name": "gun_fall",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
 "name": "gun_jump",
@@ -71,6 +68,11 @@ animations = [ {
 "loop": true,
 "name": "gun_shoot",
 "speed": 20.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "gun_fall",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
@@ -106,7 +108,7 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=5]
 resource_name = "hurt"
 length = 0.2
 tracks/0/type = "value"
@@ -122,10 +124,10 @@ tracks/0/keys = {
 "values": [ 0.0, 1.0, 0.0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 4, 6 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=7]
 size = 12
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
@@ -182,16 +184,16 @@ enabled = true
 cast_to = Vector2( 8, 0 )
 
 [node name="BodyPlayer" type="AnimationPlayer" parent="Body"]
-anims/hurt = SubResource( 7 )
+anims/hurt = SubResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 2 )
-shape = SubResource( 5 )
+position = Vector2( 0.441942, 2.13258 )
+shape = SubResource( 6 )
 
 [node name="FloorRaycasts" type="Node2D" parent="."]
 
 [node name="RayCast2D" type="RayCast2D" parent="FloorRaycasts"]
-position = Vector2( 4, 8 )
+position = Vector2( 3, 8 )
 enabled = true
 cast_to = Vector2( 0, 8 )
 collision_mask = 33
@@ -203,7 +205,7 @@ cast_to = Vector2( 0, 8 )
 collision_mask = 33
 
 [node name="RayCast2D3" type="RayCast2D" parent="FloorRaycasts"]
-position = Vector2( -4, 8 )
+position = Vector2( -3, 8 )
 enabled = true
 cast_to = Vector2( 0, 8 )
 collision_mask = 33
@@ -245,7 +247,7 @@ margin_left = -26.0
 margin_top = -24.0
 margin_right = 26.0
 margin_bottom = -7.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 align = 1
 valign = 1
 __meta__ = {
@@ -257,12 +259,18 @@ margin_left = -26.0
 margin_top = -41.0
 margin_right = 26.0
 margin_bottom = -20.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 11 )
+
+[node name="Dead" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 12 )
 
 [connection signal="timeout" from="WallStickTimer" to="PlayerSM" method="_on_WallStickTimer_timeout"]
 [connection signal="animation_finished" from="Body/Muzzle/Flash/AnimationPlayer" to="AttackSM" method="_on_AnimationPlayer_animation_finished"]

@@ -37,6 +37,9 @@ onready var leftWallRaycasts = $WallRaycasts/Left
 onready var rightWallRaycasts = $WallRaycasts/Right
 onready var muzzleCheck = $Body/MuzzleCheck
 
+onready var hurtSound = $Hurt
+onready var deadSound = $Dead
+
 func _ready():
 	Globals.PLAYER = self
 	Hud.set_health(health)
@@ -132,7 +135,6 @@ func _attack():
 	bullet.transform = muzzle.global_transform
 	Globals.CAMERA.set_trauma(0.12)
 	
-	
 # Ensure animation is not needlessly restarted
 func _play_animation(anim):
 	if animPlayer.animation != anim:
@@ -149,6 +151,7 @@ func hit():
 	if !invulnTimer.is_stopped():
 		return
 	
+	hurtSound.play()
 	health -= 1
 	Hud.set_health(health)
 	invulnTimer.start()
@@ -161,10 +164,12 @@ func fell(body):
 	if body != self:
 		return
 	health = 0
+	bodyPlayer.play("hurt")
 	Hud.set_health(health)
 	die()
 
 func die():
 	dead = true
+	deadSound.play()
 	Globals.CAMERA.add_trauma(0.5)
 	emit_signal("dead")
