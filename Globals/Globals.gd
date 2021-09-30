@@ -11,4 +11,4 @@ var GOAL = null
 var CAMERA = null
 
 var LEVEL_COMPLETE = false
-
+var PLAY_MUSIC = true

@@ -5,6 +5,13 @@ export(String, "slide_in", "slide_out", "fade") var animOut = "slide_out"
 
 onready var animPlayer = $AnimationPlayer
 
+func _process(delta):
+	if !Globals.PLAY_MUSIC:
+		$Music.stop()
+	elif $Music.playing == false:
+		$Music.play()
+		$Music.autoplay = true
+
 func change_scene(path, delay = 0.5):
 	yield(get_tree().create_timer(delay), "timeout")
 	animPlayer.play(animIn)

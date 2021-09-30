@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://SceneChanger/SceneChanger.gd" type="Script" id=1]
+[ext_resource path="res://assets/sounds/sad_giraffe.wav" type="AudioStream" id=2]
 
 [sub_resource type="Animation" id=1]
 resource_name = "fade"
@@ -76,3 +77,7 @@ __meta__ = {
 anims/fade = SubResource( 1 )
 anims/slide_in = SubResource( 2 )
 anims/slide_out = SubResource( 3 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -20.0

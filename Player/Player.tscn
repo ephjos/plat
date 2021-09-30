@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Player/PlayerSM.gd" type="Script" id=1]
 [ext_resource path="res://assets/Tiles/tile_0040.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://assets/Tiles/tile_0043.png" type="Texture" id=10]
 [ext_resource path="res://assets/sounds/hurt.wav" type="AudioStream" id=11]
 [ext_resource path="res://assets/sounds/dead.wav" type="AudioStream" id=12]
+[ext_resource path="res://assets/sounds/jump.wav" type="AudioStream" id=13]
 
 [sub_resource type="Shader" id=1]
 resource_local_to_scene = true
@@ -44,6 +45,11 @@ animations = [ {
 "name": "gun_run",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 2 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "gun_shoot",
+"speed": 20.0
+}, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
 "name": "fall",
@@ -64,19 +70,14 @@ animations = [ {
 "name": "gun_jump",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ), ExtResource( 4 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
-"name": "gun_shoot",
-"speed": 20.0
+"name": "gun_idle",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
 "name": "gun_fall",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "gun_idle",
 "speed": 5.0
 } ]
 
@@ -271,6 +272,10 @@ stream = ExtResource( 11 )
 
 [node name="Dead" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 12 )
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 13 )
+volume_db = -13.126
 
 [connection signal="timeout" from="WallStickTimer" to="PlayerSM" method="_on_WallStickTimer_timeout"]
 [connection signal="animation_finished" from="Body/Muzzle/Flash/AnimationPlayer" to="AttackSM" method="_on_AnimationPlayer_animation_finished"]

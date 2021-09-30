@@ -28,7 +28,10 @@ func _physics_process(delta):
 	if _near_wall() || _near_edge():
 		movement *= -1
 		sprite.scale.x *= -1
-	move_and_slide(Vector2(movement, 0), Globals.UP)
+	var wish_move = Vector2(movement, 0)
+	if !is_on_floor():
+		wish_move[1] = 100
+	move_and_slide(wish_move, Globals.UP)
 
 func _on_Hurtbox_body_entered(body):	
 	if body == self:

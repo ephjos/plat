@@ -39,6 +39,7 @@ onready var muzzleCheck = $Body/MuzzleCheck
 
 onready var hurtSound = $Hurt
 onready var deadSound = $Dead
+onready var jumpSound = $Jump
 
 func _ready():
 	Globals.PLAYER = self
@@ -46,6 +47,7 @@ func _ready():
 
 func _jump():
 	velocity.y = JUMP_SPEED
+	jumpSound.play()
 	
 func _variable_jump():
 	velocity.y = MIN_JUMP_SPEED
@@ -54,6 +56,7 @@ func _wall_jump():
 	var wall_jump_vector = WALL_JUMP_VECTOR
 	wall_jump_vector.x *= -wall_direction
 	velocity = wall_jump_vector
+	jumpSound.play()
 	
 func _apply_gravity(delta):
 	velocity.y += Globals.GRAVITY * delta
