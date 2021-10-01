@@ -45,10 +45,15 @@ animations = [ {
 "name": "gun_run",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ), ExtResource( 4 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
-"name": "gun_shoot",
-"speed": 20.0
+"name": "gun_idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
@@ -60,19 +65,14 @@ animations = [ {
 "name": "run",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 3 ) ],
+"frames": [ ExtResource( 2 ), ExtResource( 4 ) ],
 "loop": true,
-"name": "jump",
-"speed": 5.0
+"name": "gun_shoot",
+"speed": 20.0
 }, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
 "name": "gun_jump",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "gun_idle",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
@@ -158,7 +158,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="InvulnTimer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.4
 one_shot = true
 
 [node name="Body" type="Node2D" parent="."]
