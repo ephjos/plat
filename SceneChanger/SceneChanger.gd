@@ -16,7 +16,7 @@ func change_scene(path, delay = 0.5):
 	yield(get_tree().create_timer(delay), "timeout")
 	animPlayer.play(animIn)
 	yield(animPlayer, "animation_finished")
-	assert(get_tree().change_scene(path) == OK)
+	get_tree().change_scene(path) == OK
 	animPlayer.play(animOut)
 	Globals.LEVEL_COMPLETE = false
 	yield(animPlayer, "animation_finished")
@@ -25,7 +25,7 @@ func reload_scene(delay = 0.5):
 	yield(get_tree().create_timer(delay), "timeout")
 	animPlayer.play(animIn)
 	yield(animPlayer, "animation_finished")
-	assert(get_tree().reload_current_scene() == OK)
+	get_tree().reload_current_scene() == OK
 	animPlayer.play(animOut)
 	Globals.LEVEL_COMPLETE = false
 	yield(animPlayer, "animation_finished")

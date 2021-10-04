@@ -55,6 +55,7 @@ window/stretch/aspect="keep"
 [global]
 
 icon=false
+back=false
 
 [input]
 
