@@ -166,6 +166,7 @@ margin_bottom = 238.0
 position = Vector2( 78, 220 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 7 )
+frame = 1
 playing = true
 
 [node name="PostProcessing_tool" parent="." instance=ExtResource( 6 )]
